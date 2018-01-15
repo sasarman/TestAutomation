@@ -2,7 +2,7 @@
 
 Lux scripts for a REST API test
 
-## How to run:
+#### How to run:
  1. Install Lux environment from repo: https://github.com/hawk/lux
 
 I had no luck setting this up in Windows/cygwin, but worked for me on a CentOS7
