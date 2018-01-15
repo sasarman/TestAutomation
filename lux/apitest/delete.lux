@@ -1,0 +1,29 @@
+[doc Test REST API - DELETE]
+
+[global baseUrl=http://jsonplaceholder.typicode.com]
+
+[shell test]
+	[global validResource=$baseUrl/posts/100]
+	[global invalidResource=$baseUrl/posts/101]
+
+	[progress 'DELETE valid resource - response code 200']
+	[invoke deleteResource $validResource]
+	!echo Result: ==$responseCode==
+	?==200==
+
+	[progress 'DELETE invalid resource - response code 404']
+	[invoke deleteResource $invalidResource]
+	!echo Result: ==$responseCode==
+	?==404==
+
+[cleanup]
+	[progress 'Cleanup']
+
+# http DELETE including headers
+[macro deleteResource url]
+	[shell delete]
+	!curl -i -X DELETE $url
+	?HTTP.+\s(\d+)
+	[global responseCode=$1]
+[endmacro]
+

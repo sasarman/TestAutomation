@@ -1,0 +1,24 @@
+[doc Test REST API - POST]
+
+[global baseUrl=http://jsonplaceholder.typicode.com]
+
+[shell test]
+	[global postsUrl=$baseUrl/posts]
+
+	[progress 'POST new resource - response code 201 (created)']
+	[invoke postResource $postsUrl]
+	!echo Result: ==$responseCode==
+	?==201==
+
+
+[cleanup]
+	[progress 'Cleanup']
+
+# http DELETE including headers
+[macro postResource url]
+	[shell post]
+	!curl -i -X POST $url -d@post.101
+	?HTTP.+\s(\d+)
+	[global responseCode=$1]
+[endmacro]
+

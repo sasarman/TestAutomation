@@ -1,0 +1,39 @@
+[doc Test REST API - GET]
+
+[global baseUrl=http://jsonplaceholder.typicode.com]
+
+[shell test]
+	[global myUrl=$baseUrl/posts/2]
+
+	[progress 'GET - test response code 200']
+	[invoke getHeader $myUrl]
+	!echo Result: ==$responseCode==
+	?==200==
+
+	[progress 'GET - test attribute values']
+	[invoke getBody $myUrl]
+	!echo id: ==$id==
+	?==2==
+	!echo title: $title
+	?"qui est esse"
+
+[cleanup]
+	[progress 'Cleanup']
+
+# http GET (headers only)
+[macro getHeader url]
+	[shell get]
+	!curl -I $url
+	?HTTP.+\s(\d+)
+	[global responseCode=$1]
+[endmacro]
+
+# http GET body reponse
+[macro getBody url]
+	[shell get]
+	!curl $url
+	?"id":\s(.+),$
+	[global id=$1]
+	?"title":\s(.+),$
+	[global title=$1]
+[endmacro]
