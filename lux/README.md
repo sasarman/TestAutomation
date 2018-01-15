@@ -7,4 +7,4 @@ Lux scripts for a REST API test
 
 I had no luck setting this up in Windows/cygwin, but worked for me on a CentOS7
 
- 2. Clone this repository and run tests with `lux lux\apitest`
+ 2. Clone this repository and run tests with `lux lux/apitest`
