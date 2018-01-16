@@ -4,6 +4,7 @@
 
 [shell test]
 	[global myUrl=$baseUrl/posts/2]
+	[timeout 3]
 
 	[progress 'GET - test response code 200']
 	[invoke getHeader $myUrl]
@@ -16,6 +17,15 @@
 	?==2==
 	!echo title: $title
 	?"qui est esse"
+
+	#expect response time for 5000 items less than 50ms
+	[progress 'GET - test response time for 5000 items']
+	[global photosUrl=$baseUrl/photos]
+	[config multiplier=10]
+	[timeout 5]
+	[invoke getBody $photosUrl]
+	!echo Result: ==$responseCode==
+	?==200==
 
 [cleanup]
 	[progress 'Cleanup']

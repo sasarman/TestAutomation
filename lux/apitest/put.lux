@@ -1,0 +1,23 @@
+[doc Test REST API - POST]
+
+[global baseUrl=http://jsonplaceholder.typicode.com]
+
+[shell test]
+	[global invalidResource=$baseUrl/posts/104]
+
+	[progress 'PUT update non existent resource - response code 404 (not found)']
+	[invoke putResource $invalidResource]
+	!echo Result: ==$responseCode==
+	?==404==
+
+[cleanup]
+	[progress 'Cleanup']
+
+# http PUT to update resource
+[macro putResource url]
+	[shell post]
+	!curl -i -X POST $url -d@put.104
+	?HTTP.+\s(\d+)
+	[global responseCode=$1]
+[endmacro]
+

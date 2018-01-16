@@ -5,6 +5,7 @@
 [shell test]
 	[global validResource=$baseUrl/posts/100]
 	[global invalidResource=$baseUrl/posts/101]
+	[timeout 5]
 
 	[progress 'DELETE valid resource - response code 200']
 	[invoke deleteResource $validResource]
